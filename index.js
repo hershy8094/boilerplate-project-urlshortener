@@ -20,13 +20,13 @@ app.get('/', function (req, res) {
 let i = 1;
 
 async function saveUrl(newEntry) {
-  fs.readFile('public/data.json', 'utf8', (err, data) => {
+  fs.readFile('data.json', 'utf8', (err, data) => {
     let json = [];
     if (!err && data) {
       json = JSON.parse(data);
     }
     json.push(newEntry);
-    fs.writeFile('public/data.json', JSON.stringify(json), (err) => {
+    fs.writeFile('data.json', JSON.stringify(json), (err) => {
       if (err) {
         console.error("Save failed:", err)
       } else { console.log('successfully saved new route') }
@@ -42,7 +42,7 @@ app.post('/api/shorturl', async function (req, res) {
       res.json({ error: 'invalid url' })
       return
     } else {
-      let fileContent = await fs.promises.readFile('public/data.json', 'utf8');
+      let fileContent = await fs.promises.readFile('data.json', 'utf8');
       let data = await JSON.parse(fileContent || "[]");
       let found = data.find(route => route.original_url === url)
       if (found) {
@@ -68,7 +68,7 @@ app.post('/api/shorturl', async function (req, res) {
 );
 
 app.get(`/api/shorturl/:id`, async function (req, res) {
-  let data = await fs.promises.readFile('public/data.json', 'utf8');
+  let data = await fs.promises.readFile('data.json', 'utf8');
   let id = parseInt(req.params.id)
   data = data.length > 0 ? JSON.parse(data) : []
   let found = data.find(route => route.short_url === id)
