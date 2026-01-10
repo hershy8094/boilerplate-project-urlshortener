@@ -42,8 +42,8 @@ app.post('/api/shorturl', async function (req, res) {
       res.json({ error: 'invalid url' })
       return
     } else {
-      let data = fs.readFileSync('public/data.json', 'utf8');
-      data = data.length > 0 ? JSON.parse(data) : []
+      let fileContent = await fs.promises.readFile('public/data.json', 'utf8');
+      let data = await JSON.parse(fileContent || "[]");
       let found = data.find(route => route.original_url === url)
       if (found) {
         console.log('URL already registered, responding with saved value.')
@@ -67,8 +67,8 @@ app.post('/api/shorturl', async function (req, res) {
 }
 );
 
-app.get(`/api/shorturl/:id`, function (req, res) {
-  let data = fs.readFileSync('public/data.json', 'utf8');
+app.get(`/api/shorturl/:id`, async function (req, res) {
+  let data = await fs.promises.readFile('public/data.json', 'utf8');
   let id = parseInt(req.params.id)
   data = data.length > 0 ? JSON.parse(data) : []
   let found = data.find(route => route.short_url === id)
