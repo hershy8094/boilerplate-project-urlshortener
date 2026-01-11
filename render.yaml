@@ -1,5 +1,3 @@
-
-
 services:
   - type: web
     name: url-shortener
@@ -11,9 +9,7 @@ services:
     region: oregon
     plan: starter
     autoDeploy: true
-    envVarGroups:
-      - name: mongo-secrets
-        envVars:
-          - key: MONGO_URI
-            fromSecret: MONGO_URI
+    envVars:
+      - key: MONGO_URI
+        fromSecret: MONGO_URI
     healthCheckPath: /
