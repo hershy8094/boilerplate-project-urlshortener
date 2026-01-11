@@ -16,6 +16,4 @@ services:
         envVars:
           - key: MONGO_URI
             fromSecret: MONGO_URI
-    envVarGroups:
-      - mongo-secrets
     healthCheckPath: /
