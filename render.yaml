@@ -1,8 +1,4 @@
-envVarGroups:
-  - name: mongo-secrets
-    envVars:
-      - key: MONGO_URI
-        fromSecret: MONGO_URI
+
 
 services:
   - type: web
@@ -15,6 +11,11 @@ services:
     region: oregon
     plan: starter
     autoDeploy: true
+    envVarGroups:
+      - name: mongo-secrets
+        envVars:
+          - key: MONGO_URI
+            fromSecret: MONGO_URI
     envVarGroups:
       - mongo-secrets
     healthCheckPath: /
