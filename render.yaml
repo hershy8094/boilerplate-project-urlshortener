@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: url-shortener
+    repo: https://github.com/hershy8094/boilerplate-project-urlshortener
+    branch: main
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    region: oregon
+    plan: starter
+    autoDeploy: true
+    envVars:
+      - key: MONGO_URI
+        fromSecret: MONGO_URI
+      - key: NODE_ENV
+        value: production
+    healthCheckPath: /
